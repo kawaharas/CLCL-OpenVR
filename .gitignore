@@ -1,0 +1,7 @@
+.vs/
+backup/
+x64/
+/bin/*
+!/bin/*.exe
+!/bin/*.dll
+*.bak

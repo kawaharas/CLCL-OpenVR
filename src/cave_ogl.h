@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// cave_ogl.h
+//
+//   CLCL: CAVELib Compatible Library
+//
+//     Copyright 2015-2019 Shintaro Kawahara(kawahara@jamstec.go.jp).
+//     All rights reserved.
+//
+//   Please read the file "LICENCE.txt" before you use this software.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include "clcl.h"
