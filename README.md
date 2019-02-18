@@ -25,12 +25,11 @@ to HMDs with minor modification to the original source code.
 
 Source code modifications are needed to use CLCL.
 
-1) Comment out a line includes "glClear()" in the rendering routine.
-2) Resolve conflicts between GLEW and other OpenGL header files if these are used in the target code.
+1) Resolve conflicts between GLEW and other OpenGL header files if these are used in the target code.
 
 Compilation of the code.
 
-3) Change include path and library path from CAVELib's to CLCL's.
-4) Change library file to link from "libcave_ogl_XX.lib" to "CLCL.lib".
-5) Build.
-6) If compilation failed, modification of codes is needed. -> go back to 5)
+2) Change include path and library path from CAVELib's to CLCL's.
+3) Change library file to link from "libcave_ogl_XX.lib" to "CLCL_openvr.lib".
+4) Build.
+5) If compilation failed, modification of codes is needed. -> go back to 4)
