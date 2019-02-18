@@ -1,5 +1,4 @@
 # CLCL (CAVELib Compatible Library for HMD)
-## OpenVR version
 
 &nbsp; ***This is the OpenVR version of CLCL.***
 
