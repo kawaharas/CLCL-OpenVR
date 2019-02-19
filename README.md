@@ -8,6 +8,17 @@ for developing application software executable on CAVEs,
 and it enables us to easily port CAVELib application software 
 to HMDs with minor modification to the original source code.
 
+## Required Hardware
+
+&nbsp; One of the following hardware:
+
+- Oculus Rift with Oculus Touch
+- Oculus Rift
+- Oculus Development Kit 2
+- HTC VIVE
+- HTC VIVE Pro
+- Windows Mixed Reality device
+
 ## Required Software / Libraries
 
 - Visual Studio 2017
@@ -34,3 +45,11 @@ Compilation of the code.
 3) Change library file to link from "libcave_ogl_XX.lib" to "CLCL_openvr.lib".
 4) Build.
 5) If compilation failed, modification of codes is needed. -> go back to 4)
+
+## About Trademarks
+
+&nbsp; The CAVE is a registered trademark of the Board of Trustees of the University of Illinois at Chicago.  
+&nbsp; CAVELib is a trademark of the University of Illinois Board of Trustees.  
+&nbsp; Oculus, Rift, and Oculus Touch are trademarks or registered trademarks of Facebook Technologies, LLC.  
+&nbsp; HTC and VIVE are trademarks or registered trademarks of HTC Corporation.  
+&nbsp; All other trademarks are property of their respective owners.
