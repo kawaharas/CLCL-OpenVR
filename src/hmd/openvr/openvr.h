@@ -16,6 +16,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../../settings.h"
 
+//#define CONTROLLER_MODEL_TEST
+
 const float FEET_PER_METER = 3.280840f;
 
 #ifdef _WIN32
@@ -91,7 +93,6 @@ typedef enum {
 	WINDOWS_MR
 } DEVICE_TYPE;
 
-#define CONTROLLER_MODEL_TEST
 #ifdef CONTROLLER_MODEL_TEST
 class CGLRenderModel
 {
@@ -184,6 +185,8 @@ public:
 
 	void StartThread();
 	void StopThread();
+	bool IsMainThread();
+	bool IsDisplayThread();
 
 	void SetInitFunction(OVRCALLBACK callback, std::vector<void*> arg_list)
 	{
@@ -282,12 +285,7 @@ private:
 	GLuint CompileGLShader(const char *pchShaderName, const char *pchVertexShader, const char *pchFragmentShader);
 	bool   m_IsControllerModelLoaded;
 	bool   m_IsControllerModelVisible;
-//	GLuint m_unSceneProgramID;
-//	GLuint m_unCompanionWindowProgramID;
-//	GLuint m_unControllerTransformProgramID;
 	GLuint m_unRenderModelProgramID;
-//	GLint  m_nSceneMatrixLocation;
-//	GLint  m_nControllerMatrixLocation;
 	GLint  m_nRenderModelMatrixLocation;
 #endif // CONTROLLER_MODEL_TEST
 
@@ -305,6 +303,8 @@ private:
 	HANDLE m_HRender;
 	bool   m_IsThreadRunning; // flag to stop the thread
 	std::atomic<bool>   m_IsInitializedGLFW;
+	DWORD  m_MainThreadID;
+	DWORD  m_DisplayThreadID;
 
 	DEVICE_TYPE m_DeviceType;
 

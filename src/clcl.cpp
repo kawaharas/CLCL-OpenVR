@@ -628,6 +628,14 @@ long long CAVEGetFrameNumber()
 
 CAVEID CAVEProcessType()
 {
+	if (p_CLCL->p_Impl->hmd()->IsMainThread())
+	{
+		return CAVE_APP_PROCESS;
+	}
+	if (p_CLCL->p_Impl->hmd()->IsDisplayThread())
+	{
+		return CAVE_DISPLAY_PROCESS;
+	}
 	// TODO: should change to return other PROCESS_TYPE
 	return CAVE_APP_PROCESS;
 }

@@ -851,8 +851,6 @@ bool OpenVR::GetKey(int key)
 		result = glfwGetKey(m_Window, key);
 	}
 	return result;
-
-//	return glfwGetKey(m_Window, key);
 }
 
 int OpenVR::GetMouseButton(int button)
@@ -868,16 +866,11 @@ int OpenVR::GetMouseButton(int button)
 
 void OpenVR::StartThread()
 {
+	DWORD m_MainThreadID = GetCurrentThreadId();
+
 	m_HMutex = CreateMutex(NULL, FALSE, NULL);
-//	m_HRender = (HANDLE)_beginthread(&Oculus::MainThreadLauncher, 0, this);
 	m_HRender = (HANDLE)_beginthreadex(0, 0, MainThreadLauncherEX, reinterpret_cast<void*>(this), 0, 0);
-/*
-	while(1) {
-		// waiting the initialization of GLFW
-		Sleep(100);
-		if (m_IsInitializedGLFW == true) break;
-	}
-*/
+
 	while (!m_IsInitializedGLFW.load()); // waiting the initialization of GLFW
 }
 
@@ -889,18 +882,12 @@ void OpenVR::StopThread()
 
 void OpenVR::MainThreadEX()
 {
+	DWORD m_DisplayThreadID = GetCurrentThreadId();
+
 	Init();
 	InitGL();
 	CreateBuffers();
-//	Sleep(10000); // wait 10000 [msec] until an initialization callback is registered.
-/*
-	WaitForSingleObject(m_HMutex, INFINITE);
-	if (m_IsInitializedGLFW == false)
-	{
-	m_IsInitializedGLFW = true;
-	}
-	ReleaseMutex(m_HMutex);
-*/
+
 	m_IsInitializedGLFW.store(true);
 
 	while (m_IsThreadRunning)
@@ -939,6 +926,30 @@ unsigned __stdcall OpenVR::MainThreadLauncherEX(void *obj)
 	reinterpret_cast<OpenVR*>(obj)->MainThreadEX();
 	_endthreadex(0);
 	return 0;
+}
+
+bool OpenVR::IsMainThread()
+{
+	if (GetCurrentThreadId() == m_MainThreadID)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool OpenVR::IsDisplayThread()
+{
+	if (GetCurrentThreadId() == m_DisplayThreadID)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 int OpenVR::GetButtonState(int buttonNumber)
