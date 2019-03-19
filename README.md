@@ -1,6 +1,6 @@
 # CLCL (CAVELib Compatible Library for HMD)
 
-***This is the OpenVR version of CLCL.***
+***This is the CLCL for OpenVR. Oculus SDK version is [here](https://github.com/kawaharas/CLCL).***
 
 CLCL is a C++ library for porting CAVE application software to HMDs. 
 It emulates the function calls of CAVELib, which is a commercial library 
@@ -12,9 +12,8 @@ to HMDs with minor modification to the original source code.
 
 &nbsp; One of the following hardware:
 
-- Oculus Rift with Oculus Touch
-- Oculus Rift
-- Oculus Development Kit 2
+- Oculus Rift with Oculus Touch or mouse
+- Oculus Development Kit 2 with mouse
 - HTC VIVE
 - HTC VIVE Pro
 - Windows Mixed Reality device
@@ -23,9 +22,11 @@ to HMDs with minor modification to the original source code.
 
 - Visual Studio 2017
 - OpenVR 1.2.10
-- GLFW 3.2.1
-- GLEW 2.1.0
+- GLFW 3.2.1 *
+- GLEW 2.1.0 *
 - GLM 0.9.9
+
+&nbsp; \*  These libraries are needed to build with multi-threaded (/MT) option.
 
 ## Building the Library
 
@@ -43,7 +44,7 @@ Compilation of the code.
 
 2) Change include path and library path from CAVELib's to CLCL's.
 3) Change library file to link from "libcave_ogl_XX.lib" to "CLCL_openvr.lib".
-4) Build.
+4) Build with multi-threaded (/MT) option.
 5) If compilation failed, modification of codes is needed. -> go back to 4)
 
 ## About Trademarks

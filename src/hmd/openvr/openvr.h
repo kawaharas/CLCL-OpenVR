@@ -16,7 +16,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../../settings.h"
 
-//#define CONTROLLER_MODEL_TEST
+#define ENABLE_CONTROLLER_MODEL
 
 const float FEET_PER_METER = 3.280840f;
 
@@ -93,7 +93,7 @@ typedef enum {
 	WINDOWS_MR
 } DEVICE_TYPE;
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 class CGLRenderModel
 {
 public:
@@ -113,7 +113,7 @@ private:
 	GLsizei m_unVertexCount;
 	std::string m_sModelName;
 };
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 
 class OpenVR {
 public:
@@ -176,10 +176,10 @@ public:
 	int  GetButtonState(int buttonNumber);
 	std::pair<float, float> GetJoyStickValue();
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 	bool IsControllerModelLoaded() { return m_IsControllerModelLoaded; }
 	bool IsControllerModelVisible() { return m_IsControllerModelVisible; }
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 
 	DEVICE_TYPE GetDeviceType() { return m_DeviceType; }
 
@@ -212,7 +212,7 @@ public:
 	bool GetKey(int);
 	int  GetMouseButton(int);
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 	struct ControllerInfo_t
 	{
 		vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
@@ -229,7 +229,7 @@ public:
 		Right = 1,
 	};
 	ControllerInfo_t m_rHand[2];
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 
 private:
 #ifdef _VR
@@ -279,7 +279,7 @@ private:
 
 	vr::VRControllerState_t m_ControllerState;
 	bool m_IsControllerConnected;
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 	void   DrawController(int eyeIndex);
 	bool   CreateShader();
 	GLuint CompileGLShader(const char *pchShaderName, const char *pchVertexShader, const char *pchFragmentShader);
@@ -287,7 +287,7 @@ private:
 	bool   m_IsControllerModelVisible;
 	GLuint m_unRenderModelProgramID;
 	GLint  m_nRenderModelMatrixLocation;
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 
 	bool                m_IsInitFunctionExecuted;
 	OVRCALLBACK         p_InitFunction;

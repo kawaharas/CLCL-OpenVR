@@ -13,7 +13,7 @@
 
 #include "openvr.h"
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 
 #if defined(_WIN32)
 #define stricmp _stricmp
@@ -67,11 +67,6 @@ bool CGLRenderModel::BInit(const vr::RenderModel_t & vrModel, const vr::RenderMo
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_glIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * vrModel.unTriangleCount * 3, vrModel.rIndexData, GL_STATIC_DRAW);
 
-	// kawahara
-	//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	// kawahara
-
 	glBindVertexArray(0);
 
 	// create and populate the texture
@@ -118,8 +113,8 @@ void CGLRenderModel::Draw()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_glTexture);
 	glDrawElements(GL_TRIANGLES, m_unVertexCount, GL_UNSIGNED_SHORT, 0);
-	//	glBindTexture(GL_TEXTURE_2D, 0);
-	//	glActiveTexture(0);
+//	glBindTexture(GL_TEXTURE_2D, 0);
+//	glActiveTexture(0);
 	glBindVertexArray(0);
 }
 
@@ -303,7 +298,7 @@ void OpenVR::DrawController(int eyeIndex)
 	m_rHand[eHand].m_pRenderModel->Draw();
 	glUseProgram(0);
 }
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 
 OpenVR::OpenVR()
 {
@@ -362,10 +357,10 @@ OpenVR::OpenVR()
 	m_DeviceType = HTC_VIVE;
 	m_IsControllerConnected = false;
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 	m_IsControllerModelLoaded = false;
 	m_IsControllerModelVisible = false;
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 }
 
 OpenVR::~OpenVR()
@@ -548,10 +543,10 @@ void OpenVR::CreateBuffers()
 		exit(EXIT_FAILURE);
 	}
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 	if (!CreateShader())
 		std::cout << "create shader failed." << std::endl;
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 }
 
 void OpenVR::Terminate()
@@ -645,7 +640,7 @@ void OpenVR::UpdateTrackingData()
 
 						m_IsControllerConnected = true;
 
-#ifdef CONTROLLER_MODEL_TEST
+#ifdef ENABLE_CONTROLLER_MODEL
 						if (!m_IsControllerModelLoaded)
 						{
 							const std::string& renderModelName = GetHMDString(
@@ -660,7 +655,7 @@ void OpenVR::UpdateTrackingData()
 							std::cout << renderModelName << std::endl;
 #endif // DEBUG
 						}
-#endif // CONTROLLER_MODEL_TEST
+#endif // ENABLE_CONTROLLER_MODEL
 					}
 					break;
 				default:
@@ -904,9 +899,9 @@ void OpenVR::MainThreadEX()
 			ExecDrawCallback();
 			glPopMatrix();
 
-#ifdef CONTROLLER_MODEL_TEST
-			DrawController(eyeIndex);
-#endif // CONTROLLER_MODEL_TEST 
+#ifdef ENABLE_CONTROLLER_MODEL
+//			DrawController(eyeIndex);
+#endif // ENABLE_CONTROLLER_MODEL 
 
 			SubmitFrame(eyeIndex);
 		}
