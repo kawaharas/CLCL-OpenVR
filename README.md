@@ -20,6 +20,8 @@ to HMDs with minor modification to the original source code.
 
 ## Required Software / Libraries
 
+&nbsp; **Minimum requirement:**
+
 - Visual Studio 2017
 - OpenVR 1.2.10
 - GLFW 3.2.1 *
@@ -28,7 +30,7 @@ to HMDs with minor modification to the original source code.
 
 &nbsp; \*  These libraries are needed to build with multi-threaded (/MT) option.
 
-&nbsp; Optional (experimental: for the external camera function):
+&nbsp; **Optional (experimental: for the external camera function):**
 
 &nbsp; &nbsp; Following library is not used in the pre-built library.  
 &nbsp; &nbsp; Please rebuild your own library if you want to enable the external camera function.  
