@@ -28,6 +28,16 @@ to HMDs with minor modification to the original source code.
 
 &nbsp; \*  These libraries are needed to build with multi-threaded (/MT) option.
 
+&nbsp; Optional (experimental: for the external camera function):
+
+&nbsp; &nbsp; Following library is not used in the pre-built library.  
+&nbsp; &nbsp; Please rebuild your own library if you want to enable the external camera function.  
+&nbsp; &nbsp; To toggle enable/disable the external camera, press "c" key.
+
+- Ovrvision Pro SDK 1.90 *
+
+&nbsp; \* The library is needed to use the external camera (Ovrvision Pro by Wizapply).
+
 ## Building the Library
 
 1) Open CLCL_openvr.sln.
@@ -46,6 +56,15 @@ Compilation of the code.
 3) Change library file to link from "libcave_ogl_XX.lib" to "CLCL_openvr.lib".
 4) Build with multi-threaded (/MT) option.
 5) If compilation failed, modification of codes is needed. -> go back to 4)
+
+## Controller
+
+| |CAVE_JOYSTICK_X<br>CAVE_JOYSTICK_Y |CAVE_BUTTON1 |CAVE_BUTTON2 |CAVE_BUTTON3 |
+|---|---|---|---|---|
+|Oculus Touch (Right) |Thumb stick |Button A |Trigger |Button B |
+|VIVE controller|Trackpad |Grip button |Trigger |Menu button |
+|Motion controller (WMR) |Touchpad |Grub button |Select trigger |Menu button |
+|Mouse |Wheel (CAVE_JOYSTICK_Y) |Left button |Middle button |Right button |
 
 ## About Trademarks
 
