@@ -103,6 +103,7 @@ For details of VFIVE, please see the following paper;
 ## Execution
 
 &nbsp; To launch VFIVE, type following command.  
+&nbsp; \*  In the OpenVR version, "openvr_api.dll" needs to be placed in the same directory.  
 
 ```
   > vfive.exe dynamo.v5 -l dynamolines
