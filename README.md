@@ -22,7 +22,7 @@ to HMDs with minor modification to the original source code.
 
 &nbsp; **Minimum requirement:**
 
-- Visual Studio 2017
+- Visual Studio
 - OpenVR 1.2.10
 - GLFW 3.2.1 *
 - GLEW 2.1.0 *
