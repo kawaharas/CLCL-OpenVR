@@ -57,7 +57,7 @@ Compilation of the code.
 2) Change include path and library path from CAVELib's to CLCL's.
 3) Change library file to link from "libcave_ogl_XX.lib" to "CLCL_openvr.lib".
 4) Build with multi-threaded (/MT) option.
-5) If compilation failed, modification of codes is needed. -> go back to 4)
+5) If compilation failed, modification of code or project settings are needed. -> go back to 4)
 
 ## Controller Inputs
 
