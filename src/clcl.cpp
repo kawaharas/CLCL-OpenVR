@@ -676,6 +676,11 @@ void CAVEGetViewport(int *origX, int *origY, int *width, int *height)
 	CAVEGetWindowGeometry(origX, origY, width, height);
 }
 
+void sginap(unsigned long milliseconds)
+{
+	CAVEUSleep(milliseconds);
+}
+
 CLCL::CLCL()
 {
 	p_Impl = new Impl();

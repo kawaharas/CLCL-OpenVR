@@ -302,18 +302,14 @@ void OpenVR::DrawController(int eyeIndex)
 
 OpenVR::OpenVR()
 {
-#ifdef _VR
 	m_HmdSession = nullptr;
-#endif // _VR
 
+	m_NumEyes = 2;
 	m_WindowHeight = 1080;
-//	m_WindowHeight = 720;
-	m_NearPlaneZ = 0.01f;
-	m_FarPlaneZ = 10000.0f;
+	m_NearPlaneZ   = 0.01f;
+	m_FarPlaneZ    = 10000.0f;
 	m_VerticalFieldOfView = static_cast<float>(45.0 * M_PI / 180.0);
-//	m_FrameBufferWidth = 1280;
-//	m_FrameBufferHeight = 720;
-	m_FrameBufferWidth = 1920;
+	m_FrameBufferWidth  = 1920;
 	m_FrameBufferHeight = 1080;
 
 	m_BodyTranslation = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -325,7 +321,7 @@ OpenVR::OpenVR()
 	}
 	m_HeadVector[VECTOR_FRONT] = glm::vec3(0.0f, 0.0f, -1.0f);
 
-	for (int i = 0; i < numEyes; i++)
+	for (int i = 0; i < m_NumEyes; i++)
 	{
 		m_FrameBuffer[i] = 0;
 		m_TextureBuffer[i] = 0;
@@ -343,7 +339,6 @@ OpenVR::OpenVR()
 	}
 
 	m_IsThreadRunning = true;
-//	m_IsInitializedGLFW = false;
 	m_IsInitializedGLFW.store(false);
 	m_HMutex = nullptr;
 	m_HRender = nullptr;
@@ -369,7 +364,6 @@ OpenVR::~OpenVR()
 
 void OpenVR::Init()
 {
-#ifdef _VR
 	vr::EVRInitError eError = vr::VRInitError_None;
 	m_HmdSession = vr::VR_Init(&eError, vr::VRApplication_Scene);
 
@@ -377,11 +371,9 @@ void OpenVR::Init()
 	{
 		std::cerr << "ERROR: Could not initialize OpenVR: "
 			<< vr::VR_GetVRInitErrorAsEnglishDescription(eError) << std::endl;
-//		return nullptr;
 	}
 	m_HmdSession->GetRecommendedRenderTargetSize(&m_FrameBufferWidth, &m_FrameBufferHeight);
 
-//#ifdef DEBUG
 	const std::string& driver = GetHMDString(vr::k_unTrackedDeviceIndex_Hmd, vr::Prop_TrackingSystemName_String, nullptr);
 	const std::string& model  = GetHMDString(vr::k_unTrackedDeviceIndex_Hmd, vr::Prop_ModelNumber_String, nullptr);
 	const std::string& serial = GetHMDString(vr::k_unTrackedDeviceIndex_Hmd, vr::Prop_SerialNumber_String, nullptr);
@@ -396,7 +388,6 @@ void OpenVR::Init()
 	{
 		m_DeviceType = WINDOWS_MR;
 	}
-//#endif // DEBUG
 
 	if (!vr::VRCompositor())
 	{
@@ -407,10 +398,6 @@ void OpenVR::Init()
 
 //	vr::VRCompositor()->SetTrackingSpace(vr::ETrackingUniverseOrigin::TrackingUniverseStanding);
 	vr::VRCompositor()->SetTrackingSpace(vr::ETrackingUniverseOrigin::TrackingUniverseSeated);
-#else
-	m_FrameBufferWidth = 1280;
-	m_FrameBufferHeight = 720;
-#endif // _VR
 }
 
 void OpenVR::InitGL()
@@ -455,7 +442,6 @@ void OpenVR::InitGL()
 #endif // USE_OVRVISION
 }
 
-#ifdef _VR
 std::string OpenVR::GetHMDString(
 	vr::TrackedDeviceIndex_t unDevice,
 	vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = nullptr)
@@ -495,23 +481,18 @@ glm::mat4 OpenVR::ToGLM(vr::HmdMatrix34_t InMatrix)
 	);
 	return OutMatrix;
 }
-#endif // _VR
 
 void OpenVR::CreateBuffers()
 {
-#ifdef _VR
-	for (int eyeIndex = 0; eyeIndex < numEyes; eyeIndex++)
+	for (int eyeIndex = 0; eyeIndex < m_NumEyes; eyeIndex++)
 	{
 		m_ProjectionMatrix[eyeIndex] = ToGLM(m_HmdSession->GetProjectionMatrix(vr::EVREye(eyeIndex), m_NearPlaneZ, m_FarPlaneZ)); // openvr 1.0.5
 	}
-#else
-	m_ProjectionMatrix[0] = glm::transpose(glm::perspectiveFov(45.0f, float(m_FrameBufferWidth), float(m_FrameBufferHeight), m_NearPlaneZ, m_FarPlaneZ));
-#endif // _VR
 
-	glGenFramebuffers(numEyes, m_FrameBuffer);
-	glGenTextures(numEyes, m_TextureBuffer);
-	glGenTextures(numEyes, m_DepthBuffer);
-	for (int eyeIndex = 0; eyeIndex < numEyes; eyeIndex++)
+	glGenFramebuffers(m_NumEyes, m_FrameBuffer);
+	glGenTextures(m_NumEyes, m_TextureBuffer);
+	glGenTextures(m_NumEyes, m_DepthBuffer);
+	for (int eyeIndex = 0; eyeIndex < m_NumEyes; eyeIndex++)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_TextureBuffer[eyeIndex]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -537,9 +518,9 @@ void OpenVR::CreateBuffers()
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		glDeleteFramebuffers(numEyes, m_FrameBuffer);
-		glDeleteTextures(numEyes, m_TextureBuffer);
-		glDeleteRenderbuffers(numEyes, m_DepthBuffer);
+		glDeleteFramebuffers(m_NumEyes, m_FrameBuffer);
+		glDeleteTextures(m_NumEyes, m_TextureBuffer);
+		glDeleteRenderbuffers(m_NumEyes, m_DepthBuffer);
 		exit(EXIT_FAILURE);
 	}
 
@@ -551,27 +532,23 @@ void OpenVR::CreateBuffers()
 
 void OpenVR::Terminate()
 {
-	// termination processing
-	glDeleteFramebuffers(numEyes, m_FrameBuffer);
+	glDeleteFramebuffers(m_NumEyes, m_FrameBuffer);
 	glDeleteTextures(2, m_TextureBuffer);
 	glDeleteRenderbuffers(2, m_DepthBuffer);
 
 	glfwDestroyWindow(m_Window);
 	glfwTerminate();
 
-#ifdef _VR
 	if (m_HmdSession != nullptr)
 	{
 		vr::VR_Shutdown();
 	}
-#endif // _VR
 }
 
 void OpenVR::UpdateTrackingData()
 {
 	m_FrameIndex++;
 
-#ifdef _VR
 	vr::TrackedDevicePose_t trackedDevicePose[vr::k_unMaxTrackedDeviceCount];
 	vr::VRCompositor()->WaitGetPoses(trackedDevicePose, vr::k_unMaxTrackedDeviceCount, nullptr, 0);
 
@@ -651,9 +628,6 @@ void OpenVR::UpdateTrackingData()
 								std::cout << "ERROR: m_rHand[eHand].m_pRenderModel = NULL" << std::endl;
 							m_rHand[eHand].m_sRenderModelName = renderModelName;
 							m_IsControllerModelLoaded = true;
-#ifdef DEBUG
-							std::cout << renderModelName << std::endl;
-#endif // DEBUG
 						}
 #endif // ENABLE_CONTROLLER_MODEL
 					}
@@ -663,17 +637,14 @@ void OpenVR::UpdateTrackingData()
 			}
 		}
 	}
-#endif // _VR
 }
 
 void OpenVR::PreProcess()
 {
-#ifdef _VR
-	for (int eyeIndex = 0; eyeIndex < numEyes; eyeIndex++)
+	for (int eyeIndex = 0; eyeIndex < m_NumEyes; eyeIndex++)
 	{
 		m_EyePose[eyeIndex] = ToGLM(m_HmdSession->GetEyeToHeadTransform(vr::EVREye(eyeIndex)));
 	}
-#endif // _VR
 
 #ifdef USE_OVRVISION
 	m_OVRVision.PreStore();
@@ -682,19 +653,14 @@ void OpenVR::PreProcess()
 
 void OpenVR::SubmitFrame(int eyeIndex)
 {
-#ifdef _VR
 //	const vr::Texture_t tex = { reinterpret_cast<void*>(intptr_t(m_TextureBuffer[eyeIndex])), vr::API_OpenGL, vr::ColorSpace_Gamma }; // openvr 1.0.3
 	const vr::Texture_t tex = { reinterpret_cast<void*>(intptr_t(m_TextureBuffer[eyeIndex])), vr::TextureType_OpenGL, vr::ColorSpace_Gamma }; // openvr 1.0.5
 	vr::VRCompositor()->Submit(vr::EVREye(eyeIndex), &tex);
-#endif // _VR
 }
 
 void OpenVR::PostProcess()
 {
-#ifdef _VR
-	// Tell the compositor to begin work immediately instead of waiting for the next WaitGetPoses() call
 	vr::VRCompositor()->PostPresentHandoff();
-#endif // _VR
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, GL_NONE);
 	glViewport(0, 0, m_WindowWidth, m_WindowHeight);
@@ -891,7 +857,7 @@ void OpenVR::MainThreadEX()
 		UpdateTrackingData();
 		ExecIdleCallback();
 		PreProcess();
-		for (int eyeIndex = 0; eyeIndex < numEyes; eyeIndex++)
+		for (int eyeIndex = 0; eyeIndex < m_NumEyes; eyeIndex++)
 		{
 			SetMatrix(eyeIndex);
 			glPushMatrix();
@@ -900,7 +866,7 @@ void OpenVR::MainThreadEX()
 			glPopMatrix();
 
 #ifdef ENABLE_CONTROLLER_MODEL
-//			DrawController(eyeIndex);
+			DrawController(eyeIndex);
 #endif // ENABLE_CONTROLLER_MODEL 
 
 			SubmitFrame(eyeIndex);
@@ -910,10 +876,6 @@ void OpenVR::MainThreadEX()
 
 	ExecStopCallback();
 	Terminate();
-
-//	_endthread();
-
-//	return 0;
 }
 
 unsigned __stdcall OpenVR::MainThreadLauncherEX(void *obj)
@@ -952,10 +914,6 @@ int OpenVR::GetButtonState(int buttonNumber)
 	int state = -1;
 
 	uint64_t buttonState = m_ControllerState.ulButtonPressed;
-//	int nDevice = 3;
-//	vr::VRControllerState_t controllerState;
-//	vr::VRSystem()->GetControllerState(nDevice, &controllerState, sizeof(vr::VRControllerState_t));
-//	uint64_t buttonState = controllerState.ulButtonPressed;
 	uint64_t buttonMask;
 
 	switch (buttonNumber)

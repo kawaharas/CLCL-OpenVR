@@ -70,16 +70,8 @@ typedef void(*OVRCALLBACK3)(void*, void*, void*);
 typedef void(*OVRCALLBACK4)(void*, void*, void*, void*);
 typedef void(*OVRCALLBACK5)(void*, void*, void*, void*, void*);
 
-#define _VR
-#ifdef _VR
-//#include <openvr/openvr.h>
 #include <openvr.h>
 #pragma comment(lib, "openvr_api")
-
-const int numEyes = 2;
-#else
-const int numEyes = 1;
-#endif // _VR
 
 typedef enum {
 	VECTOR_UP = 0,
@@ -122,9 +114,7 @@ public:
 
 	GLFWwindow* window() { return m_Window; }
 
-#ifdef _VR
 	vr::IVRSystem* hmdSession() { return m_HmdSession; }
-#endif // _VR
 
 	void Init();
 	void InitGL();
@@ -232,12 +222,9 @@ public:
 #endif // ENABLE_CONTROLLER_MODEL
 
 private:
-#ifdef _VR
 	vr::IVRSystem* m_HmdSession = nullptr;
-	const int numEyes = 2;
-#else
-	const int numEyes = 1;
-#endif // _VR
+	int m_NumEyes;
+
 	GLFWwindow *m_Window;
 	int   m_WindowWidth;
 	int   m_WindowHeight;
@@ -530,11 +517,9 @@ private:
 		}
 	}
 protected:
-#ifdef _VR
 	glm::mat4 ToGLM(vr::HmdMatrix44_t InMatrix);
 	glm::mat4 ToGLM(vr::HmdMatrix34_t InMatrix);
 	std::string GetHMDString(
 		vr::TrackedDeviceIndex_t unDevice,
 		vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError);
-#endif // _VR
 };

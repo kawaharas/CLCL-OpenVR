@@ -40,8 +40,6 @@ extern const int CONTROLLER_BUTTON2;
 extern const int CONTROLLER_BUTTON3;
 extern const int CONTROLLER_BUTTON4;
 
-//const float FEET_PER_METER = 3.280840f;
-
 typedef enum {
 	JOYSTICK_LEFT = 0,
 	JOYSTICK_RIGHT,
@@ -280,7 +278,7 @@ void CAVENavConvertVectorWorldToCAVE(float invector[3], float outvector[3]);
 void CAVEGetViewport(int *origX, int *origY, int *width, int *height);
 void CAVESetOption(CAVEID option, int value);
 
-//void sginap(unsigned long milliseconds) { CAVEUSleep(milliseconds); }
+void sginap(unsigned long milliseconds);
 
 class CLCL
 {
