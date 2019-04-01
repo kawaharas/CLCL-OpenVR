@@ -102,6 +102,27 @@ For details of VFIVE, please see the following paper;
 
 ## Execution
 
+&nbsp; Rocate the extracted sample data (**sample_little.tar.gz**) and **tex_maker.exe** in the same directory as **vfive.exe**.  
+
+&nbsp; &nbsp; &nbsp; +-- dynamo.v5  
+&nbsp; &nbsp; &nbsp; +-- dynamo.x  
+&nbsp; &nbsp; &nbsp; +-- dynamo.y  
+&nbsp; &nbsp; &nbsp; +-- dynamo.z  
+&nbsp; &nbsp; &nbsp; +-- dynamo.vel.x  
+&nbsp; &nbsp; &nbsp; +-- dynamo.vel.y  
+&nbsp; &nbsp; &nbsp; +-- dynamo.vel.z  
+&nbsp; &nbsp; &nbsp; +-- dynamo.vor_z_sq  
+&nbsp; &nbsp; &nbsp; +-- dynamo.vorticity_z  
+&nbsp; &nbsp; &nbsp; +-- dynamo.temprature  
+&nbsp; &nbsp; &nbsp; +-- dynamolines  
+&nbsp; &nbsp; &nbsp; +-- dynamolines.x  
+&nbsp; &nbsp; &nbsp; +-- dynamolines.y  
+&nbsp; &nbsp; &nbsp; +-- dynamolines.z  
+&nbsp; &nbsp; &nbsp; +-- dynamolines.c  
+&nbsp; &nbsp; &nbsp; +-- **tex_maker.exe**  
+&nbsp; &nbsp; &nbsp; +-- **vfive.exe**  
+&nbsp; &nbsp; &nbsp; +-- ***openvr_api.dll*** (OpenVR version only)  
+
 &nbsp; To launch VFIVE, type following command.  
 &nbsp; \*  In the OpenVR version, "openvr_api.dll" needs to be placed in the same directory.  
 
