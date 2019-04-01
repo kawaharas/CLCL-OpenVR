@@ -59,7 +59,7 @@ Compilation of the code.
 4) Build with multi-threaded (/MT) option.
 5) If compilation failed, modification of codes is needed. -> go back to 4)
 
-## Controller
+## Controller Inputs
 
 | |CAVE_JOYSTICK_X<br>CAVE_JOYSTICK_Y |CAVE_BUTTON1 |CAVE_BUTTON2 |CAVE_BUTTON3 |
 |---|---|---|---|---|
