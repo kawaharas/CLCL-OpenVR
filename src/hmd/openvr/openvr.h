@@ -44,12 +44,14 @@ const float FEET_PER_METER = 3.280840f;
 #define OVR_OS_WIN32
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+/*
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 #pragma comment(lib, "GLFW3.lib")
 #pragma comment(lib, "GLEW32s.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "winmm.lib")
+*/
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/vec3.hpp> // glm::vec3

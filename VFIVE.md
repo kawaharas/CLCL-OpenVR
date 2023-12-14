@@ -84,12 +84,13 @@ For details of VFIVE, please see the following paper;
 ```
 
 &nbsp; **panel.cpp**
+&nbsp; Fix for directory path containing spaces (bugfix of VFIVE)
 ```diff
   331 #ifdef WIN32
-- 332   sprintf(command,"%s\\tex_maker %s 0x%x 0x%x %s",
+- 332   sprintf(command, "%s\\tex_maker %s 0x%x 0x%x %s",
 - 333     dir, label_temp,bgc,fgc,file_name);
-+ 332   sprintf(command,"tex_maker %s 0x%x 0x%x %s",
-+ 333     label_temp,bgc,fgc,file_name);
++ 332   sprintf(command, "\"%s\\tex_maker.exe\" %s 0x%x 0x%x %s",
++ 333     dir, label_temp,bgc,fgc,file_name);
   334 #else
 ```
 
